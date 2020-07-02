@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	layout:decorator="template1">
+<head>
+<meta charset="utf-8" />
+<title>client info</title>
+<script>
+	$(document).ready(function() {
+		$(".nav li").removeClass('active');//this will remove the active class from  
+
+		$('#Client').addClass('active');
+
+	});
+</script>
+
+
+</head>
+
+<body>
+
+	<div layout:fragment="content">
+		<div class="container">
+
+
+			<div class="row">
+
+				<div class="col-md-6 offset-md-3"
+					th:if="${account == null or account.getAccountCode()=='0000'}">
+
+					<div class="card ">
+						<div class="card-header h4 text-center py-4 text-white bg-info">Check
+							Account</div>
+						<div class="card-body">
+							<form th:action="@{/checkAccount1}" method="get">
+								<div>
+									<label class="font-weight-light col-form-label">Account
+										code </label> <input type="text" name="AccountCode" />
+									<button type="submit" class="btn btn-primary">check</button>
+								</div>
+								<div th:if="${exception}" class="text-danger">Account
+									doesn't exist</div>
+							</form>
+
+						</div>
+					</div>
+
+				</div>
+
+
+
+
+				<div class="col-md-6 offset-md-3"
+					th:unless="${account == null or account.getAccountCode()=='0000'}">
+					<div class="card">
+						<div class="card-header text-white bg-info">Account
+							informations</div>
+						<div class="card-body">
+							<div>
+								<label> Name : </label> <label
+									th:text="${account.client.clientName}"></label>
+							</div>
+							<div>
+								<label class="font-weight-light col-form-label"> Account
+									code : </label> <label th:text="${account.getAccountCode()}"></label>
+							</div>
+							<div>
+								<label class="font-weight-light col-form-label"> Balance
+									: </label> <label th:text="${account.Balance}"></label>
+							</div>
+
+							<div>
+								<label class="font-weight-light col-form-label"> Date of
+									creation : </label> <label th:text="${account.creationDate}"></label>
+							</div>
+
+							<div th:if="${type}==checking">
+								<label class="font-weight-light col-form-label"> Account
+									type : </label> <label class="font-weight-light col-form-label">Checking</label>
+							</div>
+							<div th:if="${type}==checking">
+								<label class="font-weight-light col-form-label">
+									Overdraft </label> <label class="font-weight-light col-form-label"
+									th:text="${account.overdraft}"></label>
+							</div>
+
+							<div th:if="${type}==saving">
+								<label class="font-weight-light col-form-label"> Account
+									type : </label> <label class="font-weight-light col-form-label">saving</label>
+							</div>
+							<div th:if="${type}==saving">
+								<label class="font-weight-light col-form-label"> rate :
+								</label> <label class="font-weight-light col-form-label"
+									th:text="${account.rate}"></label>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+
+
+
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

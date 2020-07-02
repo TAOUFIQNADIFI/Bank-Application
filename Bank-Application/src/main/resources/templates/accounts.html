@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	layout:decorator="template1">
+<head>
+<meta charset="utf-8" />
+<title>Accounts</title>
+<script>
+	function show1() {
+		document.getElementById('div1').style.display = 'none';
+	}
+
+	function show2() {
+		document.getElementById('div1').style.display = 'block';
+	}
+</script>
+
+
+</head>
+<body>
+
+
+	<div layout:fragment="content">
+		<div class="container">
+
+
+			<div class="row">
+
+				<!-- 		///////////////	check account card 1 ////////////// -->
+
+				<div class="col-md-6 offset-md-3" th:if="${account1}">
+
+					<div class="card ">
+						<div class="card-header h4 text-center py-4 text-white bg-info">Check
+							Account</div>
+						<div class="card-body">
+							<form th:action="@{/checkAccount}" method="get">
+								<div>
+									<label class="font-weight-light col-form-label">Account
+										code </label> <input type="text" name="AccountCode" />
+									<button type="submit" class="btn btn-primary">check</button>
+								</div>
+								<div th:if="${exception}" class="text-danger">Account
+									doesn't exist</div>
+							</form>
+
+						</div>
+					</div>
+
+				</div>
+
+
+				<!-- 		///////////////	check account card 2 ////////////// -->
+
+
+				<div class="col-md-6" th:if="${!account1}">
+
+					<div class="card ">
+						<div class="card-header h4 text-center py-4 text-white bg-info">Check
+							Account</div>
+						<div class="card-body">
+							<form th:action="@{/checkAccount}" method="get">
+								<div>
+									<label class="font-weight-light col-form-label">Account
+										code </label> <input type="text" name="AccountCode" />
+									<button type="submit" class="btn btn-primary">check</button>
+								</div>
+								<div th:if="${exception}" class="text-danger">Account
+									doesn't exist</div>
+							</form>
+
+						</div>
+					</div>
+
+				</div>
+
+
+				<!-- 				//////////////// Account informations//////////////// -->
+
+
+				<div class="col-md-6">
+					<div class="card" th:if="${account}">
+						<div class="card-header text-white bg-info">Account
+							informations</div>
+						<div class="card-body">
+							<div>
+								<label> Name : </label> <label
+									th:text="${account.client.clientName}"></label>
+							</div>
+							<div>
+								<label class="font-weight-light col-form-label"> Account
+									code : </label> <label th:text="${account.getAccountCode()}"></label>
+							</div>
+							<div>
+								<label class="font-weight-light col-form-label"> Balance
+									: </label> <label th:text="${account.Balance}"></label>
+							</div>
+
+							<div>
+								<label class="font-weight-light col-form-label"> Date of
+									creation : </label> <label th:text="${account.creationDate}"></label>
+							</div>
+
+							<div th:if="${type}==checking">
+								<label class="font-weight-light col-form-label"> Account
+									type : </label> <label class="font-weight-light col-form-label">Checking</label>
+							</div>
+							<div th:if="${type}==checking">
+								<label class="font-weight-light col-form-label">
+									Overdraft </label> <label class="font-weight-light col-form-label"
+									th:text="${account.overdraft}"></label>
+							</div>
+
+							<div th:if="${type}==saving">
+								<label class="font-weight-light col-form-label"> Account
+									type : </label> <label class="font-weight-light col-form-label">saving</label>
+							</div>
+							<div th:if="${type}==saving">
+								<label class="font-weight-light col-form-label"> rate :
+								</label> <label class="font-weight-light col-form-label"
+									th:text="${account.rate}"></label>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+
+
+
+			</div>
+
+			<div class="row">
+
+
+				<!-- 		////////////////////////	account operations	/////////////// -->
+
+
+
+				<div class="col-md-6" sec:authorize="hasRole('ROLE_ADMIN')">
+
+
+					<!-- 					<!-- 				<div sec:authorize="hasRole('ROLE_ADMIN')" >  teststtstts </div> -->
+
+					<div class="card" th:if="${account}">
+						<div class="card-header text-white bg-info">Account
+							operations</div>
+						<div class="card-body">
+
+							<form th:action="@{/saveOperation}" method="post">
+								<div>
+									<label class="font-weight-light col-form-label">Account:</label>
+									<input type="hidden" name="AccountCode"
+										th:value="${account.getAccountCode()}"> <label
+										th:text="${account.getAccountCode()}"></label>
+								</div>
+								<div>
+									<input type="radio" name="operationType" value="Transfer"
+										checked="checked" onclick="show2();">
+									<!-- onchange="document.getElementById('forTransfer').style.display='none'" -->
+									<label class="font-weight-light col-form-label">
+										Transfer</label> <input type="radio" name="operationType"
+										value="CashDep" onclick="show1();">
+									<!-- onchange="document.getElementById('forTransfer').style.display='none'" -->
+									<label class="font-weight-light col-form-label">Cash
+										Deposit</label> <input type="radio" name="operationType"
+										value="WithdrawM" onclick="show1();">
+
+									<!-- 										onchange="document.getElementById('forTransfer').style.display='block'">
+ -->
+									<label class="font-weight-light col-form-label">Withdraw
+										Money</label>
+
+								</div>
+
+								<div class="form-group">
+
+
+									<label class="grey-text font-weight-light">Amount:</label> <input
+										type="text" name="amount" class="form-control" />
+
+
+								</div>
+
+								<div class="form-group" id="div1">
+									<label class="grey-text font-weight-light">To:</label> <input
+										type="text" name="AccountCode2" class="form-control" />
+
+								</div>
+								<div class="text-danger"
+									th:text="${#httpServletRequest.getParameter('error')}"></div>
+
+
+								<button type="submit" class="btn btn-primary center">Save</button>
+
+
+							</form>
+
+						</div>
+
+
+
+
+
+					</div>
+
+
+
+
+				</div>
+
+
+				<div class="col-md-6">
+
+					<div class="card" th:if="${account}">
+						<div class="card-header card-title text-white bg-info">Operations
+							List</div>
+						<div class="card-body">
+
+							<table id="dtBasicExample"
+								class="table table-striped table-bordered table-sm"
+								cellspacing="0" width="100%">
+								<thead>
+									<tr>
+										<th scope="col">Num</th>
+										<th scope="col">Type</th>
+										<th scope="col">Date</th>
+										<th scope="col">Amount</th>
+									</tr>
+								</thead>
+								<tr th:each="o:${operationsList}">
+									<td th:text="${o.opNumbre}"></td>
+									<td th:text="${o.class.simpleName}"></td>
+									<td th:text="${o.operationDate}"></td>
+									<td th:text="${o.amount}"></td>
+								</tr>
+							</table>
+							<!-- th:href="@{/checkAccount(AccountCode=${account.getAccountCode()},page=${status.index})}" -->
+
+
+
+
+							<ul class="pagination">
+								<li class="page-item" th:each="p,status:${pages}"><a
+									class="page-link"
+									th:href="@{/account(AccountCode=${account.getAccountCode()},page=${status.index})}"
+									th:text="${status.index}"></a></li>
+
+							</ul>
+
+
+
+						</div>
+					</div>
+				</div>
+
+
+
+			</div>
+
+
+
+
+
+
+
+		</div>
+	</div>
+
+	<!-- //////////////list of operations////////////// -->
+
+
+
+
+
+
+
+
+	<!-- /////////////////////////////////////// TABLE TEST///////////////////// -->
+
+
+
+</body>
+</html>

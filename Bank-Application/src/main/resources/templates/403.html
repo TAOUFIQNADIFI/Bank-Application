@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template1">
+<head>
+<meta charset="utf-8" />
+<title>Accounts</title>
+
+
+
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="offset-md-3 col-md-6">
+			<div class="card h-100 justify-content-center align-items-center">
+				<div class="card-header text-white  bg-danger">access error</div>
+				<div class="card-body">
+					<div class="text-danger">you are not allowed access to this
+						part: <label th:text="${exception.getMessage()}"></label></div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	
+
+
+</body>
+</html>

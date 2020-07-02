@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+<meta charset="UTF-8" />
+
+<style>
+.footer {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	background-color: #0e66c9;
+	color: white;
+	text-align: center;
+}
+</style>
+
+
+<script type="text/javascript" src="webjars/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="webjars/bootstrap/4.3.1/js/bootstrap.min.js" /></script>
+<link type="text/css" rel="stylesheet"
+	href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+
+<!-- <script>
+	$(document).ready(function() {
+		$(".nav li").removeClass('active');//this will remove the active class from  
+		//previously active menu item 
+		$('#CheckAccount').addClass('active');
+		//for demo
+		$('#Client').addClass('active');
+		//for sale 
+		$('#Operations').addClass('active');
+	});
+</script> -->
+
+
+</head>
+<body>
+	<header>
+		<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+			<ul class="navbar-nav">
+				<li id="CheckAccount" class="nav-item"><a class="nav-link"
+					th:href="@{/checkAccount}">Check Account</a></li>
+				<li id="Client" class="nav-item"><a class="nav-link"
+					th:href="@{/client}">Client</a></li>
+				<li id="Operations" class="nav-item"><a class="nav-link"
+					th:href="@{/account}">Operations</a></li>
+
+
+				<!-- <li class="nav-item "><a class="nav-link"
+					th:href="@{/operations}">Accounts</a></li> -->
+
+
+
+			</ul>
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item active"><a
+					class="nav-link text-white active "
+					th:text="Welcome +' ' + ${user}"> </a></li>
+				<li class="nav-item active"><a class="nav-link"
+					th:href="@{/logout}">Logout</a></li>
+
+			</ul>
+		</nav>
+	</header>
+
+
+
+
+	<section layout:fragment="content"></section>
+	<footer>
+
+		<div class="footer">
+			<small>bank address </small>
+		</div>
+	</footer>
+
+
+</body>
+</html>
