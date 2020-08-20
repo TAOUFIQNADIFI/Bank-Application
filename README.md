@@ -12,8 +12,8 @@ App users with "user" role can only check the account informations and list of o
 
 Spring boot , Hibernate , JPA , MySql, Spring MVC, Thymeleaf, Spring Security
 
-for testing: username: admin , password : 1234 , roles= admin , user username: admin1 , password : 1234 , roles= admin , user username: admin2 , password : 1234 , roles= admin , user
+for testing: {username: admin , password : 1234 , roles= admin }, { username: admin1 , password : 1234 , roles: admin }, { username: admin2 , password : 1234 , roles: admin }, 
 
-username: user , password : 1234 , roles= user username: user1 , password : 1234 , roles= user username: user2 , password : 1234 , roles= user
+{username: user , password : 1234 , roles= user } ; {username: user1 , password : 1234 , roles= user} ; { username: user2 , password : 1234 , roles= user}
 
 Account code : c1 c2 Ac1 Ac2
