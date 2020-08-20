@@ -1,0 +1,6 @@
+* linguist-vendored
+*.js linguist-vendored=false
+*.java linguist-detectable=true
+*.spring  linguist-detectable=true
+*.mysql linguist-detectable=true
+*.hibernate a linguist-detectable=true
